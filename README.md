@@ -19,17 +19,13 @@ This website is designed to:
 
 ### Main Pages:
 - Home (`index.html`)
-- About (`about.html`)
-- Services (`services.html`)
 - Prompt Library (`prompt-library.html`)
 - GPT Tools (`gpts.html`)
 - Community (`community.html`)
 
 ### Footer Links:
 - Privacy Policy (`privacy.html`)
-- Terms of Use (`terms.html`)
-- Cookie Preferences (`cookies.html`)
-- Accessibility Statement (`accessibility.html`)
+- More pages coming soon
 
 ---
 
@@ -54,7 +50,7 @@ This website is designed to:
 
 ## 🔧 Stack & Tools (in development)
 
-- Built with: BOLT (prototyping), then enhanced with OpenAI Codex
+- Built with: OpenAI Codex
 - Auth: LinkedIn OAuth
 - Hosting: GitHub Pages (initially)
 - Analytics: Plausible (GDPR-friendly)
@@ -72,7 +68,7 @@ All prompts are user-generated. Content does not represent the official view of 
 
 ## 🚀 Status
 
-This site is currently in early development. Core structure is being built in BOLT before Codex and GitHub enhancements.
+This site is currently in early development. Core structure is built with OpenAI Codex to showcase AI-driven features.
 
 ---
 
