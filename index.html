@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="SereneAI offers AI consulting, GPT tools, and a community-driven prompt library for UK businesses and creators."/>
+  <title>SereneAI - AI Tools & Community</title>
+  <style>
+    /* REVIEW: consider moving styles to a separate CSS file for caching */
+    html {
+      scroll-behavior: smooth; /* REVIEW: enables smooth anchor scrolling */
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+    }
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    header {
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .app-menu {
+      position: relative;
+    }
+    .app-menu-btn {
+      background: #e5e5e5;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+    .app-menu-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 0.5rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      padding: 0.5rem;
+      width: 200px;
+      z-index: 100;
+    }
+    .app-menu.open .app-menu-dropdown {
+      display: block;
+    }
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+    @media (min-width: 480px) {
+      .app-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .app-tile {
+      background: #f3f3f3;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #333;
+      padding: 0.75rem 0.5rem;
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-section {
+      background: #f9f9f9;
+      padding: 4rem 1rem;
+      text-align: center;
+    }
+    .hero-section h2 {
+      margin-bottom: 1rem;
+    }
+    .hero-section .tagline {
+      margin-bottom: 2rem;
+      font-size: 1.125rem;
+    }
+    .hero-buttons a,
+    .hero-buttons button {
+      display: inline-block;
+      margin: 0 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      border: none;
+      font: inherit;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: #0a84ff;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #006edc;
+    }
+    .btn-secondary {
+      background: #e5e5e5;
+      color: #333;
+    }
+    .btn-secondary:hover {
+      background: #d5d5d5;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #0a84ff;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-top: 1rem;
+    }
+    .services-section {
+      padding: 2rem 0;
+    }
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr; /* mobile: stack vertically */
+      gap: 1rem;
+    }
+    @media (min-width: 600px) {
+      .service-grid {
+        grid-template-columns: repeat(2, 1fr); /* tablets */
+      }
+    }
+    @media (min-width: 900px) {
+      .service-grid {
+        grid-template-columns: repeat(4, 1fr); /* desktop */
+      }
+    }
+    .flip-card {
+      perspective: 1000px;
+    }
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .flip-card:hover .flip-inner,
+    .flip-card.flip .flip-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-front, .flip-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f0f0f0;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      backface-visibility: hidden;
+    }
+    .flip-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      overflow-y: auto; /* AI: allow modal scrolling on mobile */
+    }
+    .modal[aria-hidden="false"] {
+      display: flex;
+    }
+    .modal-dialog {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 500px;
+      padding: 1.5rem;
+      position: relative;
+      max-height: 90vh; /* AI: prevent content cut-off */
+      overflow-y: auto; /* AI: enable scrolling within the form */
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: transparent;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+    .modal form label {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+    }
+    .modal form input,
+    .modal form textarea,
+    .modal form select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .modal form textarea {
+      resize: vertical;
+    }
+
+    .newsletter-modal .modal-dialog { /* AI: smaller modal for newsletter */
+      max-width: 350px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <header id="site-header">
+      <h1 class="site-title">SereneAI</h1>
+      <div class="app-menu" id="app-menu">
+        <button id="app-menu-btn" class="app-menu-btn" type="button" aria-label="Open site menu" aria-haspopup="true" aria-expanded="false" aria-controls="site-nav">Navigation</button> <!-- REVIEW: specify button type to prevent form submission -->
+        <nav id="site-nav" class="app-menu-dropdown" aria-label="Site">
+          <div class="app-grid">
+            <a href="index.html" class="app-tile">🏠 Home</a>
+            <a href="about.html" class="app-tile">ℹ️ About</a>
+            <a href="#services" class="app-tile">🛠️ Services</a> <!-- AI: scroll to services section -->
+            <a href="prompt-library.html" class="app-tile">🧠 Prompt Library</a>
+            <a href="gpts.html" class="app-tile">🤖 GPT Tools</a>
+            <a href="community.html" class="app-tile">🧑‍🤝‍🧑 Community</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="hero-section">
+        <h2>Smarter Business Starts Here</h2>
+        <p class="tagline">We guide UK businesses through automation and AI—calmly, clearly, and effectively.</p>
+        <p class="tagline">Your partner for ethical AI strategies and automation support.</p>
+        <div class="hero-buttons">
+          <button id="open-modal" class="btn-primary" type="button" aria-controls="contact-modal">Get Started</button> <!-- REVIEW: link button to modal -->
+          <button id="open-newsletter" class="btn-secondary" type="button" aria-controls="newsletter-modal">Subscribe to Newsletter</button>
+        </div>
+      </section>
+
+<section id="services" class="services-section"><!-- AI: Service flip tiles added -->
+  <h3>Our Services</h3>
+  <div class="service-grid">
+    <article class="flip-card" tabindex="0" role="button"> <!-- REVIEW: allow keyboard activation -->
+      <div class="flip-inner">
+        <div class="flip-front">
+          <h4>AI Strategy &amp; Roadmapping</h4>
+        </div>
+        <div class="flip-back">
+          <p>We help you map out where AI fits into your business — responsibly, practically, and with long-term value.</p>
+        </div>
+      </div>
+    </article>
+    <article class="flip-card" tabindex="0" role="button">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <h4>Automation Audits</h4>
+        </div>
+        <div class="flip-back">
+          <p>We assess where time and money are being wasted — then help you streamline with smart automation.</p>
+        </div>
+      </div>
+    </article>
+    <article class="flip-card" tabindex="0" role="button">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <h4>Tool Setup &amp; Support</h4>
+        </div>
+        <div class="flip-back">
+          <p>From GPTs to full-stack tools, we help you implement and manage AI tech that works for your needs.</p>
+        </div>
+      </div>
+    </article>
+    <article class="flip-card" tabindex="0" role="button">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <h4>Ethical AI Consulting</h4>
+        </div>
+        <div class="flip-back">
+          <p>We advise on AI use that’s transparent, inclusive, and aligned with UK business values and data ethics.</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+</main>
+
+    <div id="contact-modal" class="modal" aria-hidden="true">
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" aria-label="Close" data-close>&times;</button>
+        <h3 id="modal-title">Get Started</h3>
+        <form><!-- REVIEW: add action and method when backend is ready -->
+          <label for="name">Name</label>
+          <input id="name" type="text" />
+
+          <label for="email">Email</label>
+          <input id="email" type="email" />
+
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="tel" />
+
+          <label for="company">Company Name</label>
+          <input id="company" type="text" />
+
+          <label for="size">Company Size</label>
+          <select id="size">
+            <option value="1">1</option>
+            <option value="2-5">2–5</option>
+            <option value="6-10">6–10</option>
+            <option value="10-35">10–35</option>
+            <option value="35-75">35–75</option>
+            <option value="75+">75+</option>
+          </select>
+
+          <label for="problem">What problem are you trying to solve?</label>
+          <textarea id="problem"></textarea>
+
+          <label for="success">How would you measure success?</label>
+          <textarea id="success"></textarea>
+          <button type="submit" class="btn-primary" style="margin-top:1rem;">Submit Enquiry</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="newsletter-modal" class="modal newsletter-modal" aria-hidden="true"> <!-- AI: added newsletter modal -->
+      <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="newsletter-title">
+        <button class="modal-close" aria-label="Close" data-close>&times;</button>
+        <h3 id="newsletter-title">Newsletter Sign-Up</h3>
+        <form><!-- REVIEW: add action and method when backend is ready -->
+          <label for="newsletter-name">Name</label>
+          <input id="newsletter-name" type="text" />
+
+          <label for="newsletter-email">Email</label>
+          <input id="newsletter-email" type="email" />
+
+          <button type="submit" class="btn-primary" style="margin-top:1rem;">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Begin Cookie Banner -->
+    <div id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-hidden="true" aria-live="polite"
+      style="position:fixed;bottom:0;left:0;right:0;z-index:300;background:#f0f4f8;color:#002b5c;padding:.75rem 1rem;font-size:.875rem;box-shadow:0 -2px 6px rgba(0,0,0,0.15);display:none;flex-wrap:wrap;align-items:center;">
+      <span>This site uses cookies to enhance your experience. <a href="/SereneAI-Full-Build/privacy.html" style="color:#002b5c;text-decoration:underline;">Learn more</a></span>
+      <button id="accept-cookies" type="button" style="margin-left:auto;background:#002b5c;color:#fff;border:none;border-radius:4px;padding:0.5rem 1rem;font-size:.875rem;cursor:pointer;">Accept</button>
+    </div>
+
+<script>
+  // REVIEW: consider moving scripts to an external file
+  document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('flip');
+    });
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.classList.toggle('flip');
+      }
+    }); /* REVIEW: enable keyboard flipping */
+  });
+  const appMenu = document.getElementById('app-menu');
+  const appMenuBtn = document.getElementById('app-menu-btn');
+  appMenuBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const opened = appMenu.classList.toggle('open');
+    appMenuBtn.setAttribute('aria-expanded', opened);
+  });
+  document.addEventListener('click', e => {
+    if (!appMenu.contains(e.target)) {
+      appMenu.classList.remove('open');
+      appMenuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Modal logic reused for contact and newsletter
+  function setupModal(modalId, triggerId) {
+    const modal = document.getElementById(modalId);
+    const openBtn = document.getElementById(triggerId);
+    const closeEls = modal.querySelectorAll('[data-close]');
+    const focusSelectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    let firstFocus, lastFocus;
+
+    function setFocusTrap() {
+      const focusables = modal.querySelectorAll(focusSelectors);
+      firstFocus = focusables[0];
+      lastFocus = focusables[focusables.length - 1];
+    }
+
+    function trapFocus(e) {
+      if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === firstFocus) {
+          e.preventDefault();
+          lastFocus.focus();
+        } else if (!e.shiftKey && document.activeElement === lastFocus) {
+          e.preventDefault();
+          firstFocus.focus();
+        }
+      }
+    }
+
+    function escClose(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    }
+
+    function openModal() {
+      modal.setAttribute('aria-hidden', 'false');
+      setFocusTrap();
+      firstFocus.focus();
+      document.addEventListener('keydown', trapFocus);
+      document.addEventListener('keydown', escClose);
+    }
+
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      document.removeEventListener('keydown', trapFocus);
+      document.removeEventListener('keydown', escClose);
+      openBtn.focus();
+    }
+
+    openBtn.addEventListener('click', e => {
+      e.preventDefault();
+      openModal();
+    });
+    closeEls.forEach(el => el.addEventListener('click', closeModal));
+    modal.addEventListener('click', e => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  }
+
+  setupModal('contact-modal', 'open-modal');
+  setupModal('newsletter-modal', 'open-newsletter'); // AI: newsletter setup
+
+  // AI: cookie banner logic
+  (function() {
+    const consentKey = 'sa_cookie_consent';
+    const banner = document.getElementById('cookie-banner');
+    const accept = document.getElementById('accept-cookies');
+    if (!localStorage.getItem(consentKey)) {
+      banner.style.display = 'flex';
+      banner.setAttribute('aria-hidden', 'false');
+    }
+    function handleAccept() {
+      localStorage.setItem(consentKey, 'true');
+      banner.setAttribute('aria-hidden', 'true');
+      banner.style.display = 'none';
+    }
+    accept.addEventListener('click', handleAccept);
+    accept.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleAccept();
+      }
+    });
+  })();
+</script>
+
+  </div>
+</body>
+</html>
