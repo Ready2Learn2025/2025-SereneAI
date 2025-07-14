@@ -6,9 +6,7 @@
   <meta name="description" content="Browse SereneAI's community-driven prompt library for GPT models, tailored for UK businesses and creators."/>
   <title>SereneAI - Prompt Library</title>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -161,8 +159,6 @@
           <div class="menu-title">Navigation</div>
           <div class="app-grid">
             <a href="index.html" class="app-tile"><span aria-hidden="true">🏠</span><span>Home</span></a>
-            <!-- Removed About link as the page is no longer available -->
-            <!-- Removed Services link to simplify navigation -->
             <a href="prompt-library.html" class="app-tile"><span aria-hidden="true">🧠</span><span>Prompt Library</span></a>
             <a href="gpts.html" class="app-tile"><span aria-hidden="true">🤖</span><span>GPT Tools</span></a>
             <a href="community.html" class="app-tile"><span aria-hidden="true">🧑‍🤝‍🧑</span><span>Community</span></a>
@@ -199,37 +195,37 @@
           <article class="prompt-card" data-id="brainstorming-assistant">
             <h4>Brainstorming Assistant</h4>
             <p>Generate a list of creative business ideas in the UK tech sector.</p>
-            <div class="prompt-actions"><!-- AI: replaced save/comment with LinkedIn credit -->
+            <div class="prompt-actions">
               <button class="like-btn" data-type="like" aria-label="Like">👍 <span class="count">0</span></button>
               <button class="dislike-btn" data-type="dislike" aria-label="Dislike">👎 <span class="count">0</span></button>
-              <a class="creator-link" href="https://www.linkedin.com/in/janedoe" target="_blank" rel="noopener" aria-label="Creator LinkedIn">🔗 Jane Doe</a>
+              <a class="creator-link" href="https://www.linkedin.com/in/janedoe" target="_blank" rel="noopener">🔗 Jane Doe</a>
             </div>
           </article>
+
           <article class="prompt-card" data-id="email-polisher">
             <h4>Email Polisher</h4>
             <p>Rewrite the following email to sound more professional and concise.</p>
-            <div class="prompt-actions"><!-- AI: replaced save/comment with LinkedIn credit -->
+            <div class="prompt-actions">
               <button class="like-btn" data-type="like" aria-label="Like">👍 <span class="count">0</span></button>
               <button class="dislike-btn" data-type="dislike" aria-label="Dislike">👎 <span class="count">0</span></button>
-              <a class="creator-link" href="https://www.linkedin.com/in/alexchen" target="_blank" rel="noopener" aria-label="Creator LinkedIn">🔗 Alex Chen</a>
+              <a class="creator-link" href="https://www.linkedin.com/in/alexchen" target="_blank" rel="noopener">🔗 Alex Chen</a>
             </div>
           </article>
+
           <article class="prompt-card" data-id="meeting-summary">
             <h4>Meeting Summary</h4>
             <p>Provide a short summary of these meeting notes, highlighting key actions.</p>
-            <div class="prompt-actions"><!-- AI: replaced save/comment with LinkedIn credit -->
+            <div class="prompt-actions">
               <button class="like-btn" data-type="like" aria-label="Like">👍 <span class="count">0</span></button>
               <button class="dislike-btn" data-type="dislike" aria-label="Dislike">👎 <span class="count">0</span></button>
-              <a class="creator-link" href="https://www.linkedin.com/in/sampatel" target="_blank" rel="noopener" aria-label="Creator LinkedIn">🔗 Sam Patel</a>
+              <a class="creator-link" href="https://www.linkedin.com/in/sampatel" target="_blank" rel="noopener">🔗 Sam Patel</a>
             </div>
           </article>
         </div>
       </section>
     </main>
 
-    <!-- Footer intentionally matches home page (currently empty) -->
-
-    <!-- Begin Cookie Banner -->
+    <!-- Cookie banner -->
     <div id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-hidden="true" aria-live="polite"
       style="position:fixed;bottom:0;left:0;right:0;z-index:300;background:#f0f4f8;color:#002b5c;padding:.75rem 1rem;font-size:.875rem;box-shadow:0 -2px 6px rgba(0,0,0,0.15);display:none;flex-wrap:wrap;align-items:center;">
       <span>This site uses cookies to enhance your experience. <a href="privacy.html" style="color:#002b5c;text-decoration:underline;">Learn more</a></span>
@@ -238,6 +234,7 @@
     </div>
 
     <script>
+      // Menu toggle
       const appMenu = document.getElementById('app-menu');
       const appMenuBtn = document.getElementById('app-menu-btn');
       appMenuBtn.addEventListener('click', e => {
@@ -252,7 +249,7 @@
         }
       });
 
-      // AI: cookie banner updated with reject option
+      // Cookie banner logic
       (function() {
         const consentKey = 'sa_cookie_consent';
         const banner = document.getElementById('cookie-banner');
@@ -269,21 +266,9 @@
         }
         accept.addEventListener('click', () => handleChoice('accepted'));
         reject.addEventListener('click', () => handleChoice('rejected'));
-        accept.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleChoice('accepted');
-          }
-        });
-        reject.addEventListener('keydown', e => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleChoice('rejected');
-          }
-        });
       })();
 
-      // Like/dislike counters stored in localStorage
+      // Like/dislike logic
       (function() {
         const storeKey = 'sa_prompt_votes';
         const store = JSON.parse(localStorage.getItem(storeKey) || '{}');
