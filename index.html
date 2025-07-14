@@ -370,8 +370,9 @@
     <!-- Begin Cookie Banner -->
     <div id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-hidden="true" aria-live="polite"
       style="position:fixed;bottom:0;left:0;right:0;z-index:300;background:#f0f4f8;color:#002b5c;padding:.75rem 1rem;font-size:.875rem;box-shadow:0 -2px 6px rgba(0,0,0,0.15);display:none;flex-wrap:wrap;align-items:center;">
-      <span>This site uses cookies to enhance your experience. <a href="/SereneAI-Full-Build/privacy.html" style="color:#002b5c;text-decoration:underline;">Learn more</a></span>
+      <span>This site uses cookies to enhance your experience. <a href="privacy.html" style="color:#002b5c;text-decoration:underline;">Learn more</a></span>
       <button id="accept-cookies" type="button" style="margin-left:auto;background:#002b5c;color:#fff;border:none;border-radius:4px;padding:0.5rem 1rem;font-size:.875rem;cursor:pointer;">Accept</button>
+      <button id="reject-cookies" type="button" style="margin-left:0.5rem;background:#e5e5e5;color:#002b5c;border:none;border-radius:4px;padding:0.5rem 1rem;font-size:.875rem;cursor:pointer;">Reject</button>
     </div>
 
 <script>
@@ -463,25 +464,33 @@
   setupModal('contact-modal', 'open-modal');
   setupModal('newsletter-modal', 'open-newsletter'); // AI: newsletter setup
 
-  // AI: cookie banner logic
+  // AI: cookie banner updated with reject option
   (function() {
     const consentKey = 'sa_cookie_consent';
     const banner = document.getElementById('cookie-banner');
     const accept = document.getElementById('accept-cookies');
+    const reject = document.getElementById('reject-cookies');
     if (!localStorage.getItem(consentKey)) {
       banner.style.display = 'flex';
       banner.setAttribute('aria-hidden', 'false');
     }
-    function handleAccept() {
-      localStorage.setItem(consentKey, 'true');
+    function handleChoice(value) {
+      localStorage.setItem(consentKey, value);
       banner.setAttribute('aria-hidden', 'true');
       banner.style.display = 'none';
     }
-    accept.addEventListener('click', handleAccept);
+    accept.addEventListener('click', () => handleChoice('accepted'));
+    reject.addEventListener('click', () => handleChoice('rejected'));
     accept.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        handleAccept();
+        handleChoice('accepted');
+      }
+    });
+    reject.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleChoice('rejected');
       }
     });
   })();
