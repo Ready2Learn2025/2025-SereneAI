@@ -45,10 +45,15 @@
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       padding: 0.5rem;
-      width: 200px;
+      width: 250px;
       z-index: 100;
     }
     .app-menu.open .app-menu-dropdown { display: block; }
+    .menu-title {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
     .app-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -136,8 +141,9 @@
     <header id="site-header">
       <h1 class="site-title">SereneAI</h1>
       <div class="app-menu" id="app-menu">
-        <button id="app-menu-btn" class="app-menu-btn" aria-label="Open site menu" aria-haspopup="true" aria-expanded="false">Navigation</button>
+        <button id="app-menu-btn" class="app-menu-btn" aria-label="Open site menu" aria-haspopup="true" aria-expanded="false"><span class="sr-only">Navigation</span>☰</button>
         <nav class="app-menu-dropdown" aria-label="Site">
+          <div class="menu-title">Navigation</div>
           <div class="app-grid">
             <a href="index.html" class="app-tile"><span aria-hidden="true">🏠</span><span>Home</span></a>
             <!-- Removed About link as the page is no longer available -->
