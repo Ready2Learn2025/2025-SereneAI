@@ -126,6 +126,9 @@
       padding: 0.25rem 0.5rem;
       font-size: 0.875rem;
     }
+    .prompt-actions .count {
+      margin-left: 0.25rem;
+    }
     .btn-primary {
       background: #0a84ff;
       color: #fff;
@@ -181,32 +184,32 @@
       <section class="prompt-section">
         <h2>Featured Prompts</h2>
         <div class="prompt-grid">
-          <article class="prompt-card">
+          <article class="prompt-card" data-id="brainstorming-assistant">
             <h4>Brainstorming Assistant</h4>
             <p>Generate a list of creative business ideas in the UK tech sector.</p>
             <div class="prompt-actions">
-              <button aria-label="Like">👍</button>
-              <button aria-label="Dislike">👎</button>
+              <button class="like-btn" data-type="like" aria-label="Like">👍 <span class="count">0</span></button>
+              <button class="dislike-btn" data-type="dislike" aria-label="Dislike">👎 <span class="count">0</span></button>
               <button aria-label="Save">⭐</button>
               <button aria-label="Comment">💬</button>
             </div>
           </article>
-          <article class="prompt-card">
+          <article class="prompt-card" data-id="email-polisher">
             <h4>Email Polisher</h4>
             <p>Rewrite the following email to sound more professional and concise.</p>
             <div class="prompt-actions">
-              <button aria-label="Like">👍</button>
-              <button aria-label="Dislike">👎</button>
+              <button class="like-btn" data-type="like" aria-label="Like">👍 <span class="count">0</span></button>
+              <button class="dislike-btn" data-type="dislike" aria-label="Dislike">👎 <span class="count">0</span></button>
               <button aria-label="Save">⭐</button>
               <button aria-label="Comment">💬</button>
             </div>
           </article>
-          <article class="prompt-card">
+          <article class="prompt-card" data-id="meeting-summary">
             <h4>Meeting Summary</h4>
             <p>Provide a short summary of these meeting notes, highlighting key actions.</p>
             <div class="prompt-actions">
-              <button aria-label="Like">👍</button>
-              <button aria-label="Dislike">👎</button>
+              <button class="like-btn" data-type="like" aria-label="Like">👍 <span class="count">0</span></button>
+              <button class="dislike-btn" data-type="dislike" aria-label="Dislike">👎 <span class="count">0</span></button>
               <button aria-label="Save">⭐</button>
               <button aria-label="Comment">💬</button>
             </div>
@@ -268,6 +271,35 @@
             e.preventDefault();
             handleChoice('rejected');
           }
+        });
+      })();
+
+      // Like/dislike counters stored in localStorage
+      (function() {
+        const storeKey = 'sa_prompt_votes';
+        const store = JSON.parse(localStorage.getItem(storeKey) || '{}');
+        document.querySelectorAll('.prompt-card').forEach((card, idx) => {
+          const id = card.getAttribute('data-id') || `prompt-${idx+1}`;
+          card.setAttribute('data-id', id);
+          const likeBtn = card.querySelector('[data-type="like"]');
+          const dislikeBtn = card.querySelector('[data-type="dislike"]');
+          const likeCount = likeBtn.querySelector('.count');
+          const dislikeCount = dislikeBtn.querySelector('.count');
+          const counts = store[id] || { like: 0, dislike: 0 };
+          likeCount.textContent = counts.like;
+          dislikeCount.textContent = counts.dislike;
+          likeBtn.addEventListener('click', () => {
+            counts.like += 1;
+            likeCount.textContent = counts.like;
+            store[id] = counts;
+            localStorage.setItem(storeKey, JSON.stringify(store));
+          });
+          dislikeBtn.addEventListener('click', () => {
+            counts.dislike += 1;
+            dislikeCount.textContent = counts.dislike;
+            store[id] = counts;
+            localStorage.setItem(storeKey, JSON.stringify(store));
+          });
         });
       })();
     </script>
