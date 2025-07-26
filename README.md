@@ -37,6 +37,7 @@ This website is designed to:
 - Newsletter sign-up and contact forms
 - Cookie consent (GDPR-compliant)
 - Fully responsive and accessibility-conscious design
+- Example cookie banner snippet in `cookie-banner-snippet.html`
 
 ---
 
