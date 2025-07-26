@@ -155,6 +155,25 @@
       display: block;
       margin-bottom: 0.5rem;
     }
+    .flip-hint {
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      font-size: 0.875rem;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
     .flip-inner {
       position: relative;
       width: 100%;
@@ -289,6 +308,7 @@
         <div class="flip-front">
           <span class="service-icon" aria-hidden="true">🧭</span>
           <h4>AI Strategy &amp; Roadmapping</h4>
+          <span class="flip-hint"><span class="sr-only">Flip for info</span>↷</span>
         </div>
         <div class="flip-back">
           <p>We help you map out where AI fits into your business — responsibly, practically, and with long-term value.</p>
@@ -300,6 +320,7 @@
         <div class="flip-front">
           <span class="service-icon" aria-hidden="true">🔍</span>
           <h4>Automation Audits</h4>
+          <span class="flip-hint"><span class="sr-only">Flip for info</span>↷</span>
         </div>
         <div class="flip-back">
           <p>We assess where time and money are being wasted — then help you streamline with smart automation.</p>
@@ -311,6 +332,7 @@
         <div class="flip-front">
           <span class="service-icon" aria-hidden="true">🛠️</span>
           <h4>Tool Setup &amp; Support</h4>
+          <span class="flip-hint"><span class="sr-only">Flip for info</span>↷</span>
         </div>
         <div class="flip-back">
           <p>From GPTs to full-stack tools, we help you implement and manage AI tech that works for your needs.</p>
@@ -322,6 +344,7 @@
         <div class="flip-front">
           <span class="service-icon" aria-hidden="true">⚖️</span>
           <h4>Ethical AI Consulting</h4>
+          <span class="flip-hint"><span class="sr-only">Flip for info</span>↷</span>
         </div>
         <div class="flip-back">
           <p>We advise on AI use that’s transparent, inclusive, and aligned with UK business values and data ethics.</p>
