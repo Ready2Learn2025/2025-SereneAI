@@ -79,6 +79,16 @@
       grid-template-columns: 1fr;
       gap: 1rem;
     }
+    .community-card {
+      text-align: center;
+    }
+    .community-card h3,
+    .community-card p {
+      color: #333;
+    }
+    .community-card h3 {
+      margin-bottom: 0.5rem;
+    }
     @media (min-width: 600px) {
       .community-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -100,9 +110,6 @@
     .community-tile .icon {
       font-size: 48px;
       margin-bottom: 0.5rem;
-    }
-    .community-tile h3 {
-      margin: 0 0 0.5rem 0;
     }
     .cta-button {
       display: inline-block;
@@ -150,17 +157,21 @@
         <h2>Join the SereneAI Community</h2>
         <p class="intro">Connect with like-minded people across the UK. Choose the space that suits you best.</p>
         <div class="community-grid">
-          <div class="community-tile linkedin">
-            <div class="icon" role="img" aria-label="LinkedIn icon">🔗</div>
+          <div class="community-card">
             <h3>LinkedIn Community</h3>
             <p>Your place to find like-minded UK people.</p>
-            <a class="cta-button" href="#">Join on LinkedIn</a>
+            <div class="community-tile linkedin">
+              <div class="icon" role="img" aria-label="LinkedIn icon">🔗</div>
+              <a class="cta-button" href="#">Join on LinkedIn</a>
+            </div>
           </div>
-          <div class="community-tile teams">
-            <div class="icon" role="img" aria-label="Teams icon">💬</div>
+          <div class="community-card">
             <h3>Teams Community</h3>
             <p>Your free place for support and community.</p>
-            <a class="cta-button" href="#">Join on Teams</a>
+            <div class="community-tile teams">
+              <div class="icon" role="img" aria-label="Teams icon">💬</div>
+              <a class="cta-button" href="#">Join on Teams</a>
+            </div>
           </div>
         </div>
       </section>
