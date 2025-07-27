@@ -82,6 +82,12 @@
     @media (min-width: 600px) {
       .community-grid { grid-template-columns: repeat(2, 1fr); }
     }
+    .community-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
     .community-tile {
       background: #f0f0f0;
       border-radius: 8px;
@@ -90,6 +96,8 @@
       background-size: cover;
       background-position: center;
       color: #fff;
+      display: flex;
+      justify-content: center;
     }
     .community-tile.linkedin {
       background-image: url("images/linkend in comunity.png");
@@ -97,11 +105,11 @@
     .community-tile.teams {
       background-image: url("images/teams comunity.png");
     }
-    .community-tile .icon {
+    .community-item .icon {
       font-size: 48px;
       margin-bottom: 0.5rem;
     }
-    .community-tile h3 {
+    .community-item h3 {
       margin: 0 0 0.5rem 0;
     }
     .cta-button {
@@ -150,17 +158,21 @@
         <h2>Join the SereneAI Community</h2>
         <p class="intro">Connect with like-minded people across the UK. Choose the space that suits you best.</p>
         <div class="community-grid">
-          <div class="community-tile linkedin">
+          <div class="community-item">
             <div class="icon" role="img" aria-label="LinkedIn icon">🔗</div>
             <h3>LinkedIn Community</h3>
             <p>Your place to find like-minded UK people.</p>
-            <a class="cta-button" href="#">Join on LinkedIn</a>
+            <div class="community-tile linkedin">
+              <a class="cta-button" href="#">Join on LinkedIn</a>
+            </div>
           </div>
-          <div class="community-tile teams">
+          <div class="community-item">
             <div class="icon" role="img" aria-label="Teams icon">💬</div>
             <h3>Teams Community</h3>
             <p>Your free place for support and community.</p>
-            <a class="cta-button" href="#">Join on Teams</a>
+            <div class="community-tile teams">
+              <a class="cta-button" href="#">Join on Teams</a>
+            </div>
           </div>
         </div>
       </section>
