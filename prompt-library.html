@@ -5,7 +5,162 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Browse SereneAI's community-driven prompt library for GPT models, tailored for UK businesses and creators."/>
   <title>SereneAI - Prompt Library</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+    }
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    header {
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .app-menu { position: relative; }
+    .app-menu-btn {
+      background: #e5e5e5;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+    .app-menu-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 0.5rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      padding: 0.5rem;
+      width: 250px;
+      z-index: 100;
+    }
+    .app-menu.open .app-menu-dropdown { display: block; }
+    .menu-title {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+    @media (min-width: 480px) {
+      .app-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .app-tile {
+      background: #f3f3f3;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #333;
+      padding: 0.75rem 0.5rem;
+      font-size: 0.875rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+    .app-tile span[aria-hidden="true"] {
+      font-size: 1.5rem;
+      line-height: 1;
+      display: block;
+    }
+    .prompt-section { padding: 2rem 0; }
+    .prompt-form label {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+    }
+    .prompt-form input,
+    .prompt-form textarea,
+    .prompt-form select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .prompt-form textarea { resize: vertical; }
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    @media (min-width: 600px) {
+      .prompt-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 900px) {
+      .prompt-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .prompt-card {
+      background: #f0f0f0;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .prompt-actions {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .prompt-actions button {
+      background: #e5e5e5;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+    }
+    .prompt-actions .creator-link {
+      background: #e5e5e5;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      text-decoration: none;
+      color: #333;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .prompt-actions .count {
+      margin-left: 0.25rem;
+    }
+    .btn-primary {
+      background: #0a84ff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+
+    .site-footer {
+      text-align: center;
+      font-size: 0.875rem;
+      padding: 2rem 0;
+      color: #666;
+    }
+    .site-footer a { color: inherit; }
+  </style>
 </head>
 <body>
   <div class="layout">
@@ -41,7 +196,7 @@
 
           <label for="linkedin">LinkedIn URL</label>
           <input id="linkedin" type="url" name="linkedin" />
-          <button type="submit" class="btn-primary" >Submit Prompt</button>
+          <button type="submit" class="btn-primary" style="margin-top:1rem;">Submit Prompt</button>
         </form>
       </section>
 
@@ -125,10 +280,10 @@
 
     <!-- Cookie banner -->
     <div id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-hidden="true" aria-live="polite"
-      >
-      <span>This site uses cookies to enhance your experience. <a href="privacy.html" >Learn more</a></span>
-      <button id="accept-cookies" type="button" >Accept</button>
-      <button id="reject-cookies" type="button" >Reject</button>
+      style="position:fixed;bottom:0;left:0;right:0;z-index:300;background:#f0f4f8;color:#002b5c;padding:.75rem 1rem;font-size:.875rem;box-shadow:0 -2px 6px rgba(0,0,0,0.15);display:none;flex-wrap:wrap;align-items:center;">
+      <span>This site uses cookies to enhance your experience. <a href="privacy.html" style="color:#002b5c;text-decoration:underline;">Learn more</a></span>
+      <button id="accept-cookies" type="button" style="margin-left:auto;background:#002b5c;color:#fff;border:none;border-radius:4px;padding:0.5rem 1rem;font-size:.875rem;cursor:pointer;">Accept</button>
+      <button id="reject-cookies" type="button" style="margin-left:0.5rem;background:#e5e5e5;color:#002b5c;border:none;border-radius:4px;padding:0.5rem 1rem;font-size:.875rem;cursor:pointer;">Reject</button>
     </div>
 
     <script>
