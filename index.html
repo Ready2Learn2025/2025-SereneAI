@@ -5,7 +5,262 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="SereneAI offers AI consulting, GPT tools, and a community-driven prompt library for UK businesses and creators."/>
   <title>SereneAI - AI Tools & Community</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* REVIEW: consider moving styles to a separate CSS file for caching */
+    html {
+      scroll-behavior: smooth; /* REVIEW: enables smooth anchor scrolling */
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+    }
+    .layout {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    header {
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .app-menu {
+      position: relative;
+    }
+    .app-menu-btn {
+      background: #e5e5e5;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+    .app-menu-dropdown {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      margin-top: 0.5rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      padding: 0.5rem;
+      width: 250px;
+      z-index: 100;
+    }
+    .app-menu.open .app-menu-dropdown {
+      display: block;
+    }
+    .menu-title {
+      text-align: center;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+    @media (min-width: 480px) {
+      .app-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .app-tile {
+      background: #f3f3f3;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #333;
+      padding: 0.75rem 0.5rem;
+      font-size: 0.875rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+    }
+    .app-tile span[aria-hidden="true"] {
+      font-size: 1.5rem;
+      line-height: 1;
+      display: block;
+    }
+    .hero-section {
+      background: #f9f9f9;
+      padding: 4rem 1rem;
+      text-align: center;
+      /* AI: updated hero background to local image */
+      background-image: url("images/smart buisness background.png");
+      background-size: cover;
+      background-position: center;
+    }
+    .hero-section h2 {
+      margin-bottom: 1rem;
+    }
+    .hero-section .tagline {
+      margin-bottom: 2rem;
+      font-size: 1.125rem;
+    }
+    .hero-buttons a,
+    .hero-buttons button {
+      display: inline-block;
+      margin: 0 0.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      border: none;
+      font: inherit;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: #0a84ff;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background: #006edc;
+    }
+    .btn-secondary {
+      background: #e5e5e5;
+      color: #333;
+    }
+    .btn-secondary:hover {
+      background: #d5d5d5;
+    }
+    .cta-button {
+      display: inline-block;
+      background: #0a84ff;
+      color: white;
+      padding: 0.75rem 1.25rem;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-top: 1rem;
+    }
+    .about-section {
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .services-section {
+      padding: 2rem 0;
+    }
+    .service-grid {
+      display: grid;
+      gap: 1.5rem; /* AI: more breathing room between tiles */
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* AI: responsive wrapping */
+      justify-items: center; /* AI: keep cards centred */
+      justify-content: center; /* AI: centre grid overall */
+    }
+    .flip-card {
+      width: 100%; /* AI: ensure card fills grid cell */
+      perspective: 1000px;
+    }
+    .service-icon {
+      font-size: 2rem;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    .flip-inner {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+    }
+    .flip-card:hover .flip-inner,
+    .flip-card.flip .flip-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-front, .flip-back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f0f0f0;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+      backface-visibility: hidden;
+    }
+    .flip-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      overflow-y: auto; /* AI: allow modal scrolling on mobile */
+    }
+    .modal[aria-hidden="false"] {
+      display: flex;
+    }
+    .modal-dialog {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 500px;
+      padding: 1.5rem;
+      position: relative;
+      max-height: 90vh; /* AI: prevent content cut-off */
+      overflow-y: auto; /* AI: enable scrolling within the form */
+    }
+    .modal-close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      background: transparent;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+    .modal form label {
+      display: block;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+    }
+    .modal form input,
+    .modal form textarea,
+    .modal form select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .modal form textarea {
+      resize: vertical;
+    }
+
+    .newsletter-modal .modal-dialog { /* AI: smaller modal for newsletter */
+      max-width: 350px;
+    }
+
+    .site-footer {
+      text-align: center;
+      font-size: 0.875rem;
+      padding: 2rem 0;
+      color: #666;
+    }
+    .site-footer a { color: inherit; }
+
+  </style>
 </head>
 <body>
   <div class="layout">
@@ -130,7 +385,7 @@
 
           <label for="success">How would you measure success?</label>
           <textarea id="success"></textarea>
-          <button type="submit" class="btn-primary" >Submit Enquiry</button>
+          <button type="submit" class="btn-primary" style="margin-top:1rem;">Submit Enquiry</button>
         </form>
       </div>
     </div>
@@ -146,17 +401,17 @@
           <label for="newsletter-email">Email</label>
           <input id="newsletter-email" type="email" />
 
-          <button type="submit" class="btn-primary" >Submit</button>
+          <button type="submit" class="btn-primary" style="margin-top:1rem;">Submit</button>
         </form>
       </div>
     </div>
 
     <!-- Begin Cookie Banner -->
     <div id="cookie-banner" role="dialog" aria-label="Cookie consent" aria-hidden="true" aria-live="polite"
-      >
-      <span>This site uses cookies to enhance your experience. <a href="privacy.html" >Learn more</a></span>
-      <button id="accept-cookies" type="button" >Accept</button>
-      <button id="reject-cookies" type="button" >Reject</button>
+      style="position:fixed;bottom:0;left:0;right:0;z-index:300;background:#f0f4f8;color:#002b5c;padding:.75rem 1rem;font-size:.875rem;box-shadow:0 -2px 6px rgba(0,0,0,0.15);display:none;flex-wrap:wrap;align-items:center;">
+      <span>This site uses cookies to enhance your experience. <a href="privacy.html" style="color:#002b5c;text-decoration:underline;">Learn more</a></span>
+      <button id="accept-cookies" type="button" style="margin-left:auto;background:#002b5c;color:#fff;border:none;border-radius:4px;padding:0.5rem 1rem;font-size:.875rem;cursor:pointer;">Accept</button>
+      <button id="reject-cookies" type="button" style="margin-left:0.5rem;background:#e5e5e5;color:#002b5c;border:none;border-radius:4px;padding:0.5rem 1rem;font-size:.875rem;cursor:pointer;">Reject</button>
     </div>
 
 <script>
