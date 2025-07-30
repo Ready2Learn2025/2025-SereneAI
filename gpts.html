@@ -91,20 +91,13 @@
     }
     .service-grid {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-    @media (min-width: 600px) {
-      .service-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-    @media (min-width: 900px) {
-      .service-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
+      gap: 1.5rem; /* AI: more breathing room between tiles */
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* AI: responsive wrapping */
+      justify-items: center; /* AI: keep cards centred */
+      justify-content: center; /* AI: centre grid overall */
     }
     .flip-card {
+      width: 100%; /* AI: ensure card fills grid cell */
       perspective: 1000px;
     }
     .flip-inner {
